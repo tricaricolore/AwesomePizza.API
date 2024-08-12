@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AwesomePizza.DL.Models;
 
-public class BaseStoredEntities
+public class BaseUserInquiry
 {
     [Required]
     [Column("CREATION_DATE")]

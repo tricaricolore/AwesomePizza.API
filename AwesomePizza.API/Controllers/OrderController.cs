@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AwesomePizza.Controllers;
 
-public class OrdersController(ILogger<OrdersController> logger, IOrdersBs ordersBs) : CommonControllerBase(logger)
+public class OrderController(ILogger<OrderController> logger, IOrderBs orderBs) : CommonControllerBase(logger)
 {
     [HttpPut]
     [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
@@ -17,7 +17,7 @@ public class OrdersController(ILogger<OrdersController> logger, IOrdersBs orders
     public async Task<IActionResult> Upsert([FromBody] UpsertOrderRequest request)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, request);
-        var response = await ordersBs.Upsert(request);
+        var response = await orderBs.Upsert(request);
         logger.Log(LogLevel.Debug, "{@Method} ended", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
         return Ok(response);
     }
@@ -28,7 +28,7 @@ public class OrdersController(ILogger<OrdersController> logger, IOrdersBs orders
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, id);
-        var response = await ordersBs.Get(id);
+        var response = await orderBs.Get(id);
         logger.Log(LogLevel.Debug, "{@Method} ended", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
         return Ok(response);
     }
@@ -39,7 +39,7 @@ public class OrdersController(ILogger<OrdersController> logger, IOrdersBs orders
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, id);
-        var response = await ordersBs.Delete(id);
+        var response = await orderBs.Delete(id);
         logger.Log(LogLevel.Debug, "{@Method} ended", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
         return Ok(response);
     }

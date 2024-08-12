@@ -1,0 +1,12 @@
+[
+  {
+    "IdStatus": "1",
+    "Code": "INV",
+    "Description" : "Inviata"
+  },
+  {
+    "IdStatus": "2",
+    "Code": "ELI",
+    "Description" : "Eliminata"
+  }
+]

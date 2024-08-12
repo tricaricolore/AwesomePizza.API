@@ -1,3 +1,4 @@
+using System;
 using AwesomePizza.BL.Implementations;
 using AwesomePizza.BL.Interfaces;
 using AwesomePizza.DL;
@@ -7,10 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+Console.WriteLine(DateTime.Now);
+
 var builder = WebApplication.CreateBuilder(args);
 
 //services to the container
-builder.Services.AddTransient<IOrdersBs, OrdersBs>();
+builder.Services.AddTransient<IOrderBs, OrderBs>();
+builder.Services.AddTransient<ILookupBs, LookupBs>();
 
 // Register DbContext and provide ConnectionString
 builder.Services.AddDbContext<AwesomePizzaDbContext>(optionsAction =>
@@ -23,7 +27,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<IOrdersBs, OrdersBs>();
+builder.Services.AddScoped<IOrderBs, OrderBs>();
+builder.Services.AddScoped<ILookupBs, LookupBs>();
 
 var app = builder.Build();
 

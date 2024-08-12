@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>disable</ImplicitUsings>
         <InvariantGlobalization>false</InvariantGlobalization>
+        <RootNamespace>AwesomePizza</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

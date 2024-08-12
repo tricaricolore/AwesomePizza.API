@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomePizza", "AwesomePizza\AwesomePizza.csproj", "{120225FA-6736-4DA8-AFE2-AD67208C42C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomePizza.API", "AwesomePizza.API\AwesomePizza.API.csproj", "{120225FA-6736-4DA8-AFE2-AD67208C42C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomePizza.Common", "AwesomePizza.Common\AwesomePizza.Common.csproj", "{CBF1C608-4128-4876-B9D6-0B862275C8A7}"
 EndProject

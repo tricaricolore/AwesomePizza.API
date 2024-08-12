@@ -3,7 +3,7 @@ using AwesomePizza.Common.Models.Request;
 
 namespace AwesomePizza.BL.Interfaces;
 
-public interface IOrdersBs
+public interface IOrderBs
 {
     /// <summary>
     /// Upsert order from request

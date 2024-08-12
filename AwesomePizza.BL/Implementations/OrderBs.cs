@@ -1,4 +1,5 @@
 using AwesomePizza.BL.Interfaces;
+using AwesomePizza.Common;
 using AwesomePizza.Common.Models.Dto;
 using AwesomePizza.Common.Models.Request;
 using AwesomePizza.DL;
@@ -7,15 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AwesomePizza.BL.Implementations;
 
-public class OrdersBs(AwesomePizzaDbContext dbContext) : IOrdersBs
+public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
 {
+    /// <inheritdoc cref="IOrderBs.Upsert(UpsertOrderRequest)"/>
     public async Task<ResponseDto> Upsert(UpsertOrderRequest request)
     {
         await dbContext.Database.EnsureCreatedAsync();
 
         try
         {
-            var entity = new TbOrders()
+            var entity = new Order()
             {
                 Code = Guid.NewGuid(),
                 CreationDate = DateTime.Now,
@@ -25,7 +27,7 @@ public class OrdersBs(AwesomePizzaDbContext dbContext) : IOrdersBs
             
             if (request.Id != null)
             {
-                entity = await dbContext.TbOrders
+                entity = await dbContext.Order
                     .Where(item => item.Code == request.Id && item.Deleted != true)
                     .SingleOrDefaultAsync();
 
@@ -47,18 +49,19 @@ public class OrdersBs(AwesomePizzaDbContext dbContext) : IOrdersBs
         }
     }
 
-    /// <inheritdoc cref="IOrdersBs.Get(Guid)"/>
+    /// <inheritdoc cref="IOrderBs.Get(Guid)"/>
     public async Task<OrderDto> Get(Guid id)
     {
         try
         {
             await dbContext.Database.EnsureCreatedAsync();
 
-            var entity = await dbContext.TbOrders
-                .Where(item => item.Code == id && item.Deleted != true)
+            var entity = await dbContext.Order
+                .Where(item => item.Code == id)
                 .Select(item => new OrderDto
                 {
                     Code = item.Code,
+                    Status = item.FkStatusNavigation.Code,
                     CreationUser = item.CreationUser,
                     CreationDate = item.CreationDate,
                     ModificationDate = item.ModificationDate,
@@ -83,14 +86,14 @@ public class OrdersBs(AwesomePizzaDbContext dbContext) : IOrdersBs
         }
     }
 
-    /// <inheritdoc cref="IOrdersBs.Delete(Guid)"/>
+    /// <inheritdoc cref="IOrderBs.Delete(Guid)"/>
     public async Task<ResponseDto> Delete(Guid id)
     {
         try
         {
             await dbContext.Database.EnsureCreatedAsync();
 
-            var entity = await dbContext.TbOrders
+            var entity = await dbContext.Order
                 .Where(item => item.Code == id && item.Deleted != true)
                 .FirstOrDefaultAsync();
 
@@ -99,6 +102,12 @@ public class OrdersBs(AwesomePizzaDbContext dbContext) : IOrdersBs
                 return new ResponseDto { Status = false };
             }
 
+            var statusDeleted = await dbContext.Status
+                .Where(item => item.Code == Constants.StatusType.StatusDeleted)
+                .Select(item => item.IdStatus)
+                .SingleAsync();
+
+            entity.FkStatus = statusDeleted;
             entity.Deleted = true;
             entity.DeletionDate = DateTime.Now;
             entity.DeletionUser = string.Empty;
