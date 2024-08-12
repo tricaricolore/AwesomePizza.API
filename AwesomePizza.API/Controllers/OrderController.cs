@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AwesomePizza.BL.Interfaces;
 using AwesomePizza.Common.Models.Dto;
 using AwesomePizza.Common.Models.Request;
+using AwesomePizza.Common.Models.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,11 +14,20 @@ public class OrderController(ILogger<OrderController> logger, IOrderBs orderBs) 
 {
     [HttpPut]
     [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
-    [Route("")]
     public async Task<IActionResult> Upsert([FromBody] UpsertOrderRequest request)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, request);
         var response = await orderBs.Upsert(request);
+        logger.Log(LogLevel.Debug, "{@Method} ended", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
+        return Ok(response);
+    }
+    
+    [HttpPost]
+    [ProducesResponseType(typeof(SearchOrderResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Search([FromBody] SearchOrderRequest request)
+    {
+        logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, request);
+        var response = await orderBs.Search(request);
         logger.Log(LogLevel.Debug, "{@Method} ended", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
         return Ok(response);
     }

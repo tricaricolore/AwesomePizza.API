@@ -2,6 +2,7 @@ using AwesomePizza.BL.Interfaces;
 using AwesomePizza.Common;
 using AwesomePizza.Common.Models.Dto;
 using AwesomePizza.Common.Models.Request;
+using AwesomePizza.Common.Models.Response;
 using AwesomePizza.DL;
 using AwesomePizza.DL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +18,15 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
 
         try
         {
+            var status = await dbContext.Status
+                .Where(item => item.Code == Constants.StatusType.StatusCreated)
+                .Select(item => item.IdStatus)
+                .SingleAsync();
+            
             var entity = new Order()
             {
                 Code = Guid.NewGuid(),
+                FkStatus = status,
                 CreationDate = DateTime.Now,
                 CreationUser = string.Empty,
                 Deleted = false
@@ -41,6 +48,60 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
             await dbContext.SaveChangesAsync();
 
             return new ResponseDto(entity.Code.ToString());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<SearchOrderResponse> Search(SearchOrderRequest request)
+    {
+        await dbContext.Database.EnsureCreatedAsync();
+
+        try
+        {
+            var query = dbContext.Order
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (request.Deleted != null)
+            {
+                query = query
+                    .Where(item => item.Deleted == request.Deleted);
+            }
+
+            var totalItems = await query.CountAsync();
+
+            if (request is { Page: > 0, PageSize: > 0 })
+            {
+                query = query
+                    .Skip(request.PageSize * (request.Page - 1))
+                    .Take(request.PageSize);
+            }
+
+            var response = new SearchOrderResponse()
+            {
+                Orders = await query
+                    .Select(item => new OrderDto
+                    {
+                        Code = item.Code,
+                        Status = item.FkStatusNavigation.Code,
+                        CreationUser = item.CreationUser,
+                        CreationDate = item.CreationDate,
+                        ModificationDate = item.ModificationDate,
+                        ModificationUser = item.ModificationUser,
+                        DeletionDate = item.DeletionDate,
+                        DeletionUser = item.DeletionUser,
+                        Deleted = item.Deleted
+                    }).ToListAsync(),
+                TotalItems = totalItems,
+                Page = request.Page,
+                PageSize = request.PageSize
+            };
+
+            return response;
         }
         catch (Exception e)
         {
