@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 namespace AwesomePizza.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 [Consumes("application/json")]
 [Produces("application/json")]
 public abstract class CommonControllerBase: ControllerBase
