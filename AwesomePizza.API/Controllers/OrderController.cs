@@ -14,6 +14,7 @@ public class OrderController(ILogger<OrderController> logger, IOrderBs orderBs) 
 {
     [HttpPut]
     [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
+    [Route("")]
     public async Task<IActionResult> Upsert([FromBody] UpsertOrderRequest request)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, request);
@@ -24,6 +25,7 @@ public class OrderController(ILogger<OrderController> logger, IOrderBs orderBs) 
     
     [HttpPost]
     [ProducesResponseType(typeof(SearchOrderResponse), StatusCodes.Status200OK)]
+    [Route("")]
     public async Task<IActionResult> Search([FromBody] SearchOrderRequest request)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, request);
