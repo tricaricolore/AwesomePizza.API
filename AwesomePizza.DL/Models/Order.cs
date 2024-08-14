@@ -20,4 +20,7 @@ public class Order: BaseUserInquiry
     
     [ForeignKey(nameof(FkStatus))]
     public virtual Status? FkStatusNavigation { get; set; }
+    
+    [InverseProperty("FkOrderNavigation")]
+    public ICollection<OrderFood> Foods { get; set; }
 }

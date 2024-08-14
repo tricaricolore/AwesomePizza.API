@@ -30,4 +30,52 @@ public class LookupBs(AwesomePizzaDbContext dbContext) : ILookupBs
             throw;
         }
     }
+
+    public async Task<List<LookupDto>> FoodType()
+    {
+        await dbContext.Database.EnsureCreatedAsync();
+
+        try
+        {
+            var entities = await dbContext.FoodType
+                .AsNoTracking()
+                .Select(item => new LookupDto
+                {
+                    Code = item.Code,
+                    Description = item.Description
+                })
+                .ToListAsync();
+
+            return entities;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    public async Task<List<LookupDto>> Ingredient()
+    {
+        await dbContext.Database.EnsureCreatedAsync();
+
+        try
+        {
+            var entities = await dbContext.Ingredient
+                .AsNoTracking()
+                .Select(item => new LookupDto
+                {
+                    Code = item.Code,
+                    Description = item.Description
+                })
+                .ToListAsync();
+
+            return entities;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

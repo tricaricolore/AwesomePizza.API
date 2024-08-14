@@ -14,6 +14,7 @@ Console.WriteLine(DateTime.Now);
 var builder = WebApplication.CreateBuilder(args);
 
 //services to the container
+builder.Services.AddTransient<IFoodBs, FoodBs>();
 builder.Services.AddTransient<IOrderBs, OrderBs>();
 builder.Services.AddTransient<ILookupBs, LookupBs>();
 
@@ -28,6 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IFoodBs, FoodBs>();
 builder.Services.AddScoped<IOrderBs, OrderBs>();
 builder.Services.AddScoped<ILookupBs, LookupBs>();
 

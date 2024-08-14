@@ -1,6 +1,6 @@
 namespace AwesomePizza.Common.Models;
 
-public class Page
+public abstract class Page
 {
     public abstract class Request
     {

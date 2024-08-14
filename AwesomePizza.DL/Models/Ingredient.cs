@@ -1,16 +1,16 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace AwesomePizza.DL.Models;
 
-[Table("STATUS")]
+[Table("INGREDIENT")]
 [Index(nameof(Code), IsUnique = true)]
-public class Status
+public class Ingredient
 {
     [Key]
-    [Column("ID_STATUS")]
-    public long IdStatus { get; set; }
+    [Column("ID_INGREDIENT")]
+    public long IdIngredient { get; set; }
 
     [Required]
     [Column("CODE")]

@@ -1,0 +1,12 @@
+﻿[
+  {
+    "IdFoodType": "1",
+    "Code": "PIZ",
+    "Description" : "Pizza"
+  },
+  {
+    "IdFoodType": "2",
+    "Code": "DES",
+    "Description" : "Dessert"
+  }
+]

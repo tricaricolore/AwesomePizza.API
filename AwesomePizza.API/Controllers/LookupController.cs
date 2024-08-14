@@ -19,4 +19,24 @@ public class LookupController(ILogger<LookupController> logger, ILookupBs lookup
         logger.Log(LogLevel.Debug, "{@Method} ended", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
         return Ok(response);
     }
+    
+    [HttpGet]
+    [ProducesResponseType(typeof(List<LookupDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<LookupDto>>> FoodType()
+    {
+        logger.Log(LogLevel.Debug, "{@Method} started", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
+        var response = await lookupBs.FoodType();
+        logger.Log(LogLevel.Debug, "{@Method} ended", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
+        return Ok(response);
+    }
+    
+    [HttpGet]
+    [ProducesResponseType(typeof(List<LookupDto>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<List<LookupDto>>> Ingredient()
+    {
+        logger.Log(LogLevel.Debug, "{@Method} started", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
+        var response = await lookupBs.Ingredient();
+        logger.Log(LogLevel.Debug, "{@Method} ended", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName);
+        return Ok(response);
+    }
 }

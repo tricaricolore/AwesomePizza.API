@@ -1,0 +1,16 @@
+﻿[
+  {
+    "IdFood": 1,
+    "Code": "df7f9fa8-26b1-4856-8f1b-3785cf65b3db",
+    "Name": "Margherita",
+    "Description": "La pizza piú semplice, ma la piú buona",
+    "FkType": 1
+  },
+  {
+    "IdFood": 2,
+    "Code": "831d3a17-4ada-437a-a141-e0571e6c1071",
+    "Name": "Wurstel",
+    "Description": "La pizza piú amata dai ragazzi",
+    "FkType": 1
+  }
+]

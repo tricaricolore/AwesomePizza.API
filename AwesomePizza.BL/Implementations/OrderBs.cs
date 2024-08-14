@@ -88,6 +88,26 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                     {
                         Code = item.Code,
                         Status = item.FkStatusNavigation.Code,
+                        Foods = item.Foods
+                            .GroupBy(food => food.FkFoodNavigation.Code)
+                            .Select(elem => new OrderFoodDto
+                            {
+                                Food = elem
+                                    .Select(elem => new FoodDto
+                                    {
+                                        Code = elem.FkFoodNavigation.Code,
+                                        Type = elem.FkFoodNavigation.FkTypeNavigation.Code,
+                                        Name = elem.FkFoodNavigation.Name,
+                                        Description = elem.FkFoodNavigation.Description,
+                                        Ingredients = elem.FkFoodNavigation.FoodIngredients
+                                            .Select(foodIngredient => new LookupDto
+                                            {
+                                                Code = foodIngredient.FkIngredientNavigation.Code,
+                                                Description = foodIngredient.FkIngredientNavigation.Description
+                                            }).ToList()
+                                    }).First(),
+                                Amount = elem.Count()
+                            }).ToList(),
                         CreationUser = item.CreationUser,
                         CreationDate = item.CreationDate,
                         ModificationDate = item.ModificationDate,
@@ -123,6 +143,26 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                 {
                     Code = item.Code,
                     Status = item.FkStatusNavigation.Code,
+                    Foods = item.Foods
+                        .GroupBy(food => food.FkFoodNavigation.Code)
+                        .Select(elem => new OrderFoodDto
+                        {
+                            Food = elem
+                                .Select(elem => new FoodDto
+                                {
+                                    Code = elem.FkFoodNavigation.Code,
+                                    Type = elem.FkFoodNavigation.FkTypeNavigation.Code,
+                                    Name = elem.FkFoodNavigation.Name,
+                                    Description = elem.FkFoodNavigation.Description,
+                                    Ingredients = elem.FkFoodNavigation.FoodIngredients
+                                        .Select(foodIngredient => new LookupDto
+                                        {
+                                            Code = foodIngredient.FkIngredientNavigation.Code,
+                                            Description = foodIngredient.FkIngredientNavigation.Description
+                                        }).ToList()
+                                }).First(),
+                            Amount = elem.Count()
+                        }).ToList(),
                     CreationUser = item.CreationUser,
                     CreationDate = item.CreationDate,
                     ModificationDate = item.ModificationDate,

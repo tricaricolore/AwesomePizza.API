@@ -9,4 +9,16 @@ public interface ILookupBs
     /// </summary>
     /// <returns></returns>
     Task<List<LookupDto>> Status();
+    
+    /// <summary>
+    /// Get food type
+    /// </summary>
+    /// <returns></returns>
+    Task<List<LookupDto>> FoodType();
+    
+    /// <summary>
+    /// Get ingredient
+    /// </summary>
+    /// <returns></returns>
+    Task<List<LookupDto>> Ingredient();
 }

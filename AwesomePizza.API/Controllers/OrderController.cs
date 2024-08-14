@@ -15,7 +15,7 @@ public class OrderController(ILogger<OrderController> logger, IOrderBs orderBs) 
     [HttpPut]
     [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
     [Route("")]
-    public async Task<IActionResult> Upsert([FromBody] UpsertOrderRequest request)
+    public async Task<ActionResult<ResponseDto>> Upsert([FromBody] UpsertOrderRequest request)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, request);
         var response = await orderBs.Upsert(request);
@@ -26,7 +26,7 @@ public class OrderController(ILogger<OrderController> logger, IOrderBs orderBs) 
     [HttpPost]
     [ProducesResponseType(typeof(SearchOrderResponse), StatusCodes.Status200OK)]
     [Route("")]
-    public async Task<IActionResult> Search([FromBody] SearchOrderRequest request)
+    public async Task<ActionResult<SearchOrderResponse>> Search([FromBody] SearchOrderRequest request)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, request);
         var response = await orderBs.Search(request);
@@ -37,7 +37,7 @@ public class OrderController(ILogger<OrderController> logger, IOrderBs orderBs) 
     [HttpGet]
     [ProducesResponseType(typeof(OrderDto), StatusCodes.Status200OK)]
     [Route("{id:guid}")]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
+    public async Task<ActionResult<OrderDto>> Get([FromRoute] Guid id)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, id);
         var response = await orderBs.Get(id);
@@ -48,7 +48,7 @@ public class OrderController(ILogger<OrderController> logger, IOrderBs orderBs) 
     [HttpDelete]
     [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status200OK)]
     [Route("{id:guid}")]
-    public async Task<IActionResult> Delete([FromRoute] Guid id)
+    public async Task<ActionResult<ResponseDto>> Delete([FromRoute] Guid id)
     {
         logger.Log(LogLevel.Debug, "{@Method} started with request: {@Request}", System.Reflection.MethodBase.GetCurrentMethod()?.ReflectedType?.FullName, id);
         var response = await orderBs.Delete(id);
