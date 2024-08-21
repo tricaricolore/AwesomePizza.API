@@ -23,6 +23,10 @@ public class Food
     [Column("DESCRIPTION")]
     [MaxLength(500)]
     public required string Description { get; set; }
+    
+    [Required]
+    [Column("PRICE")]
+    public required double Price { get; set; }
 
     [Required]
     [Column("FK_TYPE")]

@@ -37,6 +37,7 @@ public class FoodBs(AwesomePizzaDbContext dbContext): IFoodBs
                         Type = item.FkTypeNavigation.Code,
                         Name = item.Name,
                         Description = item.Description,
+                        Price = item.Price,
                         Ingredients = item.FoodIngredients
                             .Select(elem => new LookupDto
                             {

@@ -3,7 +3,14 @@
     "IdOrder": 1,
     "Code": "3deeb622-82e4-48cb-9e25-2076a4073e2b",
     "FkStatus": 1,
-    "CreationDate": "12/08/2024 19:07:05",
+    "CreationDate": "08/15/2024 19:07:05",
     "CreationUser": "Test User"
+  },
+  {
+    "IdOrder": 2,
+    "Code": "e9588c53-019e-4bd7-9616-0629a86c1d4f",
+    "FkStatus": 1,
+    "CreationDate": "08/16/2024 10:07:05",
+    "CreationUser": "Test User 2"
   }
 ]

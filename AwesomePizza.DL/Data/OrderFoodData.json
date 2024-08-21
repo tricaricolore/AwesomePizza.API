@@ -13,5 +13,15 @@
     "IdOrderFood": 3,
     "FkOrder": 1,
     "FkFood": 2
+  },
+  {
+    "IdOrderFood": 4,
+    "FkOrder": 2,
+    "FkFood": 1
+  },
+  {
+    "IdOrderFood": 5,
+    "FkOrder": 2,
+    "FkFood": 2
   }
 ]

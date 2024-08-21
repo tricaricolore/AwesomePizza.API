@@ -44,6 +44,16 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                 }
             }
 
+            if (request.Status != null)
+            {
+                var newStatus = await dbContext.Status
+                    .Where(item => item.Code == request.Status)
+                    .Select(item => item.IdStatus)
+                    .SingleAsync();
+                
+                entity.FkStatus = newStatus;
+            }
+
             dbContext.Update(entity);
             await dbContext.SaveChangesAsync();
 
@@ -65,6 +75,12 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
             var query = dbContext.Order
                 .AsNoTracking()
                 .AsQueryable();
+
+            if (request.Status != null)
+            {
+                query = query
+                    .Where(item => item.FkStatusNavigation != null && item.FkStatusNavigation.Code == request.Status);
+            }
 
             if (request.Deleted != null)
             {
@@ -99,6 +115,7 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                                         Type = elem.FkFoodNavigation.FkTypeNavigation.Code,
                                         Name = elem.FkFoodNavigation.Name,
                                         Description = elem.FkFoodNavigation.Description,
+                                        Price = elem.FkFoodNavigation.Price,
                                         Ingredients = elem.FkFoodNavigation.FoodIngredients
                                             .Select(foodIngredient => new LookupDto
                                             {
@@ -154,6 +171,7 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                                     Type = elem.FkFoodNavigation.FkTypeNavigation.Code,
                                     Name = elem.FkFoodNavigation.Name,
                                     Description = elem.FkFoodNavigation.Description,
+                                    Price = elem.FkFoodNavigation.Price,
                                     Ingredients = elem.FkFoodNavigation.FoodIngredients
                                         .Select(foodIngredient => new LookupDto
                                         {
