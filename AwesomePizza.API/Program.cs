@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using AwesomePizza.BL.Implementations;
 using AwesomePizza.BL.Interfaces;
@@ -8,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-Console.WriteLine(DateTime.Now);
 
 var builder = WebApplication.CreateBuilder(args);
 
