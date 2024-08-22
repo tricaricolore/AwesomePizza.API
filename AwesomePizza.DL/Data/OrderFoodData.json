@@ -2,26 +2,25 @@
   {
     "IdOrderFood": 1,
     "FkOrder": 1,
-    "FkFood": 1
-  },
-  {
-    "IdOrderFood": 2,
-    "FkOrder": 1,
-    "FkFood": 1
+    "FkFood": 1,
+    "Amount": 2
   },
   {
     "IdOrderFood": 3,
     "FkOrder": 1,
-    "FkFood": 2
+    "FkFood": 2,
+    "Amount": 1
   },
   {
     "IdOrderFood": 4,
     "FkOrder": 2,
-    "FkFood": 1
+    "FkFood": 1,
+    "Amount": 1
   },
   {
     "IdOrderFood": 5,
     "FkOrder": 2,
-    "FkFood": 2
+    "FkFood": 2,
+    "Amount": 3
   }
 ]

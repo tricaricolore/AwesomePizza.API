@@ -23,4 +23,7 @@ public class OrderFood
     
     [ForeignKey(nameof(FkFood))]
     public virtual Food? FkFoodNavigation { get; set; }
+    
+    [Column("AMOUNT")]
+    public int Amount { get; set; }
 }

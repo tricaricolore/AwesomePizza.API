@@ -22,7 +22,7 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                 .Where(item => item.Code == Constants.StatusType.StatusCreated)
                 .Select(item => item.IdStatus)
                 .SingleAsync();
-            
+
             var entity = new Order()
             {
                 Code = Guid.NewGuid(),
@@ -31,7 +31,7 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                 CreationUser = string.Empty,
                 Deleted = false
             };
-            
+
             if (request.Id != null)
             {
                 entity = await dbContext.Order
@@ -50,8 +50,28 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                     .Where(item => item.Code == request.Status)
                     .Select(item => item.IdStatus)
                     .SingleAsync();
-                
+
                 entity.FkStatus = newStatus;
+            }
+
+            if (request.Foods != null)
+            {
+                var foods = request.Foods
+                    .Select(item =>
+                    {
+                        var idFood = dbContext.Food
+                            .Where(elem => elem.Code.ToString() == item.Key)
+                            .Select(elem => elem.IdFood)
+                            .Single();
+                        
+                        return new OrderFood
+                        {
+                            FkFood = idFood,
+                            Amount = item.Value
+                        };
+                    }).ToList();
+
+                entity.Foods = foods;
             }
 
             dbContext.Update(entity);
@@ -161,25 +181,23 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
                     Code = item.Code,
                     Status = item.FkStatusNavigation.Code,
                     Foods = item.Foods
-                        .GroupBy(food => food.FkFoodNavigation.Code)
                         .Select(elem => new OrderFoodDto
                         {
-                            Food = elem
-                                .Select(elem => new FoodDto
-                                {
-                                    Code = elem.FkFoodNavigation.Code,
-                                    Type = elem.FkFoodNavigation.FkTypeNavigation.Code,
-                                    Name = elem.FkFoodNavigation.Name,
-                                    Description = elem.FkFoodNavigation.Description,
-                                    Price = elem.FkFoodNavigation.Price,
-                                    Ingredients = elem.FkFoodNavigation.FoodIngredients
-                                        .Select(foodIngredient => new LookupDto
-                                        {
-                                            Code = foodIngredient.FkIngredientNavigation.Code,
-                                            Description = foodIngredient.FkIngredientNavigation.Description
-                                        }).ToList()
-                                }).First(),
-                            Amount = elem.Count()
+                            Food = new FoodDto
+                            {
+                                Code = elem.FkFoodNavigation.Code,
+                                Type = elem.FkFoodNavigation.FkTypeNavigation.Code,
+                                Name = elem.FkFoodNavigation.Name,
+                                Description = elem.FkFoodNavigation.Description,
+                                Price = elem.FkFoodNavigation.Price,
+                                Ingredients = elem.FkFoodNavigation.FoodIngredients
+                                    .Select(foodIngredient => new LookupDto
+                                    {
+                                        Code = foodIngredient.FkIngredientNavigation.Code,
+                                        Description = foodIngredient.FkIngredientNavigation.Description
+                                    }).ToList()
+                            },
+                            Amount = elem.Amount
                         }).ToList(),
                     CreationUser = item.CreationUser,
                     CreationDate = item.CreationDate,
@@ -232,7 +250,7 @@ public class OrderBs(AwesomePizzaDbContext dbContext) : IOrderBs
             entity.DeletionUser = string.Empty;
 
             await dbContext.SaveChangesAsync();
-            
+
             return new ResponseDto(entity.Code.ToString());
         }
         catch (Exception e)
