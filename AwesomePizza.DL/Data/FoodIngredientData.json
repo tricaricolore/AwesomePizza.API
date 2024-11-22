@@ -1,0 +1,37 @@
+﻿[
+  {
+    "IdFoodIngredient": 1,
+    "FkFood": 1,
+    "FkIngredient": 1
+  },
+  {
+    "IdFoodIngredient": 2,
+    "FkFood": 1,
+    "FkIngredient": 2
+  },
+  {
+    "IdFoodIngredient": 3,
+    "FkFood": 1,
+    "FkIngredient": 3
+  },
+  {
+    "IdFoodIngredient": 4,
+    "FkFood": 2,
+    "FkIngredient": 1
+  },
+  {
+    "IdFoodIngredient": 5,
+    "FkFood": 2,
+    "FkIngredient": 2
+  },
+  {
+    "IdFoodIngredient": 6,
+    "FkFood": 2,
+    "FkIngredient": 3
+  },
+  {
+    "IdFoodIngredient": 7,
+    "FkFood": 2,
+    "FkIngredient": 4
+  }
+]

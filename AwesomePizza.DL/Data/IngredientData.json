@@ -1,0 +1,22 @@
+﻿[
+  {
+    "IdIngredient": "1",
+    "Code": "BAS",
+    "Description" : "Base pizza"
+  },
+  {
+    "IdIngredient": "2",
+    "Code": "POM",
+    "Description" : "Pomodoro"
+  },
+  {
+    "IdIngredient": "3",
+    "Code": "MOZ",
+    "Description" : "Mozzarella"
+  },
+  {
+    "IdIngredient": "4",
+    "Code": "WUR",
+    "Description" : "Wurstel"
+  }
+]
